@@ -44,17 +44,37 @@ Press **Ctrl+C** to stop the server. Pass `--no-open` to skip opening the browse
 <summary>Script to complete this section</summary>
 
 ```powershell
+### Powershell
+
+<details>
+
+<summary>Script to complete this section</summary>
+
+```powershell
 $ClientId = Read-Host "Client ID"
 $ClientSecret = Read-Host "Client Secret"
 
 Start-Process "https://accounts.spotify.com/authorize?client_id=$ClientId&response_type=code&scope=user-read-currently-playing,user-read-recently-played&redirect_uri=https://example.com/callback"
 
-$Code = Read-Host "Please insert everything after 'https://example.com/callback?code='"
+$Code = Read-Host "Paste everything after 'https://example.com/callback?code='"
 
 $ClientBytes = [System.Text.Encoding]::UTF8.GetBytes("${ClientId}:${ClientSecret}")
-$EncodedClientInfo =[Convert]::ToBase64String($ClientBytes)
+$EncodedClientInfo = [Convert]::ToBase64String($ClientBytes)
 
-curl -X POST -H "Content-Type: application/x-www-form-urlencoded" -H "Authorization: Basic $EncodedClientInfo" -d "grant_type=authorization_code&redirect_uri=https://example.com/callback&code=$Code" https://accounts.spotify.com/api/token
+$Body = "grant_type=authorization_code&redirect_uri=https://example.com/callback&code=$Code"
+
+$Response = Invoke-WebRequest -Uri "https://accounts.spotify.com/api/token" `
+  -Method POST `
+  -Headers @{ "Authorization" = "Basic $EncodedClientInfo" } `
+  -ContentType "application/x-www-form-urlencoded" `
+  -Body $Body
+
+$Response.Content
+```
+
+Save the `refresh_token` value from the JSON response.
+
+</details>
 ```
 
 </details>
