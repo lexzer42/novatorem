@@ -1,8 +1,18 @@
- {
-  "redirects": [
+{
+  "functions": {
+    "api/*.py": {
+      "runtime": "python3.9"
+    }
+  },
+  "routes": [
     {
-      "source": "/",
-      "destination": "https://github.com/lexzer42/novatorem"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
+    },
+    {
+      "src": "/",
+      "dest": "https://github.com/lexzer42/novatorem",
+      "status": 302
     }
   ]
 }
