@@ -1,8 +1,13 @@
- {
+{
   "redirects": [
     {
       "source": "/",
-      "destination": "https://github.com/novatorem/novatorem"
+      "destination": "https://github.com/lexzer42/novatorem"
     }
-  ]
+  ],
+  "functions": {
+    "api/*.py": {
+      "runtime": "python3.9"
+    }
+  }
 }
